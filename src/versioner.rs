@@ -10,8 +10,8 @@ impl Versioner {
         Self{versions: HashMap::new()}
     }
 
-    pub fn add(&mut self, name: String, version: String) {
-        let versions = self.versions.entry(name.clone()).or_insert(HashSet::new());
-        versions.insert(version.clone());
+    pub fn add(&mut self, name: &str, version: &str) {
+        let versions = self.versions.entry(name.to_string()).or_insert(HashSet::new());
+        versions.insert(version.to_string());
     }
 }

@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 quick-xml = { version = "0.26.0", features = ["serialize", "serde"] }
 serde = { version = "1.0.147", features = ["derive"] }
+walkdir = "2.3.2"

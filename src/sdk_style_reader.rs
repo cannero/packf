@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::BufReader;
+use std::path::Path;
 
 use serde::Deserialize;
 use quick_xml::de::from_reader;
@@ -25,7 +26,7 @@ struct Project {
     item_group: Option<Vec<ItemGroup>>,
 }
 
-fn read_csproj(path: &str) -> Project {
+fn read_csproj<P: AsRef<Path>>(path: P) -> Project {
     let f = File::open(path).expect("csproj read");
     let b = BufReader::new(f);
 
@@ -33,13 +34,13 @@ fn read_csproj(path: &str) -> Project {
     xml
 }
 
-pub fn add_packages(path: &str, versioner: &mut Versioner){
+pub fn add_packages<P: AsRef<Path>>(path: P, versioner: &mut Versioner){
     let project = read_csproj(path);
     if let Some(item_groups) = project.item_group {
         for item_group in item_groups {
             if let Some(packages) = item_group.package_reference {
                 for package in packages {
-                    versioner.add(package.include, package.version);
+                    versioner.add(&package.include, &package.version);
                 }
             }
         }

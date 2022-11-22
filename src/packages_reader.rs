@@ -1,4 +1,4 @@
-use std::{fs::File, io::BufReader};
+use std::{fs::File, io::BufReader, path::Path};
 
 use quick_xml::de::from_reader;
 use serde::Deserialize;
@@ -16,8 +16,7 @@ struct Packages {
     package: Vec<Package>,
 }
 
-
-fn read_package(path: &str) -> Packages {
+fn read_package<P: AsRef<Path>>(path: P) -> Packages {
     let f = File::open(path).expect("package read");
     let b = BufReader::new(f);
 
@@ -25,11 +24,11 @@ fn read_package(path: &str) -> Packages {
     package
 }
 
-pub fn add_config_packages(path: &str, versioner: &mut Versioner) {
+pub fn add_config_packages<P: AsRef<Path>>(path: P, versioner: &mut Versioner) {
     let packages = read_package(path);
 
     for package in packages.package {
-        versioner.add(package.id, package.version);
+        versioner.add(&package.id, &package.version);
     }
 }
 

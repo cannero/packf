@@ -34,5 +34,6 @@ fn main() {
             }
         }
 
+    versioner.print_multiple();
     println!("{:?}", versioner);
 }

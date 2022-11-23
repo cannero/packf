@@ -30,8 +30,7 @@ fn read_csproj<P: AsRef<Path>>(path: P) -> Project {
     let f = File::open(path).expect("csproj read");
     let b = BufReader::new(f);
 
-    let xml = from_reader(b).expect("check nodes without end");
-    xml
+    from_reader(b).expect("check nodes without end")
 }
 
 pub fn add_packages<P: AsRef<Path>>(path: P, versioner: &mut Versioner){

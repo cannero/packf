@@ -20,8 +20,7 @@ fn read_package<P: AsRef<Path>>(path: P) -> Packages {
     let f = File::open(path).expect("package read");
     let b = BufReader::new(f);
 
-    let package = from_reader(b).expect("packages not read");
-    package
+    from_reader(b).expect("packages not read")
 }
 
 pub fn add_config_packages<P: AsRef<Path>>(path: P, versioner: &mut Versioner) {

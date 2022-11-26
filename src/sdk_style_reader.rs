@@ -32,7 +32,7 @@ fn read_csproj<P: AsRef<Path>>(path: P) -> Project {
     let f = File::open(path).expect("csproj read");
     let b = BufReader::new(f);
 
-    from_reader(b).expect("check Project nodes")
+    from_reader(b).expect("check if ItemGroup nodes are in sequence")
 }
 
 pub fn add_packages<P: AsRef<Path>>(path: P, versioner: &mut Versioner){
